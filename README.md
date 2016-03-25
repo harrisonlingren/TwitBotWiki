@@ -1,5 +1,5 @@
 # TwitBotWiki
-A Twitter bot for Wikipedia searches
+A Twitter bot for Wikipedia searches. @BotForWiki!
 
 # Installation
 
