@@ -35,7 +35,7 @@ def wikiToString(term):
 		wikiPage = wikipedia.page(wikipedia.search(term)[0])
 		wikiURL = shortURL(wikiPage.url)
 		wikiSummary = wikiPage.summary
-		summ = (wikiSummary[0:234])
+		summ = (wikiSummary[0:219])
 		outp = (' ' + summ + '... Read more: ' + wikiURL)
 	except wikipedia.exceptions.DisambiguationError:
 		outp = ' Wiki article for "'+term+'" is a disambiguation! Try being more specific.'
