@@ -15,7 +15,7 @@ def TwitBotWiki(tweet):
 		term = re.findall('"([^"]*)"', tweet_text)
 		print('>  @'+tweet_user+': '+tweet_text+' | term: '+term[0])
 		
-		l = 239 - len(tweet_user) - 1
+		l = 241 - len(tweet_user) - 1
 		reply = ('@' + tweet_user + wikiToString(term[0], l))
 		replyASCII = str(unicodedata.normalize('NFKD', reply).encode('ascii','ignore'))
 	except IndexError:
