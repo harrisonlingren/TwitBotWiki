@@ -7,7 +7,6 @@ def TwitBotWiki(tweet):
 	api = tweepy.API(auth)
 	
 	parsedJSON = json.loads(tweet)
-	
 	tweet_user = parsedJSON['user']['screen_name']
 	tweet_id = parsedJSON['id_str']
 	tweet_text = parsedJSON['text']
@@ -16,7 +15,8 @@ def TwitBotWiki(tweet):
 		term = re.findall('"([^"]*)"', tweet_text)
 		print('>  @'+tweet_user+': '+tweet_text+' | term: '+term[0])
 		
-		reply = ('@' + tweet_user + wikiToString(term[0]))
+		l = 239 - len(tweet_user) - 1
+		reply = ('@' + tweet_user + wikiToString(term[0], l))
 		replyASCII = str(unicodedata.normalize('NFKD', reply).encode('ascii','ignore'))
 	except IndexError:
 		print('>  @'+tweet_user+': '+tweet_text+' | IndexError, no term found')
@@ -29,13 +29,12 @@ def TwitBotWiki(tweet):
 	return 'Tweet Sent!'
 	
 	
-def wikiToString(term):
-	
+def wikiToString(term, length):
 	try:
 		wikiPage = wikipedia.page(wikipedia.search(term)[0])
 		wikiURL = shortURL(wikiPage.url)
 		wikiSummary = wikiPage.summary
-		summ = (wikiSummary[0:219])
+		summ = (wikiSummary[0:length])
 		outp = (' ' + summ + '... Read more: ' + wikiURL)
 	except wikipedia.exceptions.DisambiguationError:
 		outp = ' Wiki article for "'+term+'" is a disambiguation! Try being more specific.'
