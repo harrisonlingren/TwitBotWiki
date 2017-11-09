@@ -1,6 +1,5 @@
-import tweepy, json, wikipedia, re, unicodedata
+import tweepy, json, wikipedia, re, unicodedata, requests
 from getTwitterAuth import getTwitterAuth
-from pyshorteners import Shortener
 
 def TwitBotWiki(tweet):
 	
@@ -36,7 +35,7 @@ def wikiToString(term):
 		wikiPage = wikipedia.page(wikipedia.search(term)[0])
 		wikiURL = shortURL(wikiPage.url)
 		wikiSummary = wikiPage.summary
-		summ = (wikiSummary[0:79])
+		summ = (wikiSummary[0:219])
 		outp = (' ' + summ + '... Read more: ' + wikiURL)
 	except wikipedia.exceptions.DisambiguationError:
 		outp = ' Wiki article for "'+term+'" is a disambiguation! Try being more specific.'
@@ -45,5 +44,8 @@ def wikiToString(term):
 	return outp
 	
 def shortURL(url):
-	shortener = Shortener('IsgdShortener')
-	return "{}".format(shortener.short(url))
+	#shortener = Shortener('IsgdShortener')
+	#return "{}".format(shortener.short(url))
+
+	r = requests.post('https://fastl.ink/api/new', data=json.dumps( {'url': url} ))
+	return r.text
